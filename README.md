@@ -1,6 +1,6 @@
 # Kitchen Fire 🔥🥘
 
-**Play:** https://chicafricanculture.github.io/<kitchen-fire/>/
+**Play:** https://chicafricanculture.github.io/kitchen-fire/
 
 Kitchen Fire is a fast arcade game about cooking under rising heat — using African ingredients as the core visual language.  
 Tap the correct ingredient **only when it’s inside the GOLD window** before the kitchen overheats.
