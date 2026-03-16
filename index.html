@@ -28,6 +28,11 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+
+    html, body {
+      height: 100%;
+    }
+
     body{
       font-family: system-ui, -apple-system, sans-serif;
       background: var(--bg);
@@ -80,6 +85,7 @@
       flex-direction:column;
       gap:6px;
     }
+
     .brand h1{
       font-weight: 1000;
       text-transform: uppercase;
@@ -87,6 +93,7 @@
       font-size: clamp(1.05rem, 1.8vw, 1.45rem);
       line-height: 1.0;
     }
+
     .brand p{
       color: rgba(255,255,255,.93);
       line-height: 1.2;
@@ -127,7 +134,11 @@
       font-size: 1.05rem;
       line-height: 1;
     }
-    .heart.off{ opacity: .26; filter: grayscale(1); }
+
+    .heart.off{
+      opacity: .26;
+      filter: grayscale(1);
+    }
 
     .mode{
       display:flex;
@@ -136,6 +147,7 @@
       overflow:hidden;
       background: rgba(255,255,255,0.92);
     }
+
     .mode button{
       border:none;
       background: transparent;
@@ -147,6 +159,7 @@
       color: rgba(31,20,14,0.85);
       font-size: .84rem;
     }
+
     .mode button.active{
       background: rgba(255,255,255,0.35);
       box-shadow: inset 0 0 0 1px rgba(31,20,14,0.10);
@@ -164,9 +177,11 @@
       cursor:pointer;
       font-size: .84rem;
     }
-    .btn:active{ transform: translateY(1px); }
 
-    /* chaos meter */
+    .btn:active{
+      transform: translateY(1px);
+    }
+
     .meter{
       display:flex;
       align-items:center;
@@ -174,6 +189,7 @@
       flex: 1 1 320px;
       min-width: 260px;
     }
+
     .meter .label{
       font-weight: 1000;
       text-transform: uppercase;
@@ -181,6 +197,7 @@
       white-space: nowrap;
       color: rgba(255,255,255,0.95);
     }
+
     .bar{
       position: relative;
       height: 12px;
@@ -191,6 +208,7 @@
       border: 1px solid rgba(255,255,255,0.35);
       overflow:hidden;
     }
+
     .bar > .fill{
       position:absolute;
       inset:0;
@@ -199,9 +217,11 @@
       background: linear-gradient(90deg, #ffd000, #ff8a00, #ff2d2d);
       transition: width .15s linear;
     }
+
     .bar.pulse > .fill{
       animation: pulseBar .9s infinite;
     }
+
     @keyframes pulseBar{
       0%{ filter: brightness(1); }
       50%{ filter: brightness(1.25); }
@@ -216,6 +236,7 @@
       border-top: 1px solid rgba(255,255,255,0.28);
       padding-top: 8px;
     }
+
     .targets .label{
       font-weight: 1000;
       text-transform: uppercase;
@@ -223,6 +244,7 @@
       color:white;
       white-space: nowrap;
     }
+
     #targetContainer{
       display:flex;
       gap:8px;
@@ -231,6 +253,7 @@
       flex-wrap:wrap;
       overflow:hidden;
     }
+
     .target-tag{
       display:flex;
       align-items:center;
@@ -247,19 +270,25 @@
       color: var(--ink);
       text-shadow:none;
     }
-    .target-tag.done{ opacity: .62; }
+
+    .target-tag.done{
+      opacity: .62;
+    }
+
     .target-tag.active{
       outline: 4px solid rgba(255,208,0,0.95);
       outline-offset: 2px;
       transform: scale(1.02);
       box-shadow: 0 0 16px rgba(255,208,0,0.85);
     }
+
     .target-tag img{
       width: 46px;
       height: 46px;
       object-fit: contain;
       flex:0 0 auto;
     }
+
     .target-meta{
       display:flex;
       flex-direction:column;
@@ -267,6 +296,7 @@
       min-width:0;
       flex:1;
     }
+
     .target-meta .name{
       font-weight: 1000;
       text-transform: uppercase;
@@ -278,6 +308,7 @@
       text-overflow: ellipsis;
       color: var(--ink);
     }
+
     .target-meta .meaning{
       display:block;
       visibility:hidden;
@@ -289,7 +320,10 @@
       overflow:hidden;
       text-overflow: ellipsis;
     }
-    .target-tag.done .target-meta .meaning{ visibility: visible; }
+
+    .target-tag.done .target-meta .meaning{
+      visibility: visible;
+    }
 
     .pill{
       border: 1px solid rgba(31,20,14,0.18);
@@ -309,8 +343,9 @@
       position: relative;
       border: 8px solid #4a3729;
       border-radius: 20px;
-      background: radial-gradient(1200px 500px at 50% 110%, rgba(255,80,0,0.35), rgba(0,0,0,0)) ,
-                  linear-gradient(145deg, #2a1e14, #1a120b);
+      background:
+        radial-gradient(1200px 500px at 50% 110%, rgba(255,80,0,0.35), rgba(0,0,0,0)),
+        linear-gradient(145deg, #2a1e14, #1a120b);
       box-shadow:
         0 20px 30px rgba(0,0,0,0.5),
         inset 0 0 28px rgba(255, 140, 0, 0.22);
@@ -333,7 +368,7 @@
       bottom:10px;
       width: var(--windowW);
       transform: translateX(-50%);
-      border-radius: 0px;
+      border-radius: 0;
       border: 4px solid rgba(255,208,0,0.95);
       box-shadow:
         inset 0 0 0 2px rgba(255,255,255,0.62),
@@ -342,6 +377,7 @@
       z-index:4;
       animation: windowPulse 2s infinite;
     }
+
     @keyframes windowPulse{
       0%{ opacity:.78; }
       50%{ opacity:1; box-shadow: 0 0 26px rgba(255,208,0,0.95); }
@@ -351,7 +387,7 @@
     .lane{
       position:relative;
       overflow:hidden;
-      border-radius:0px;
+      border-radius:0;
       border: 1px solid rgba(31,20,14,0.18);
       background:
         linear-gradient(to right, rgba(243,230,216,0.98), rgba(243,230,216,0) 70px),
@@ -360,6 +396,7 @@
       padding: var(--lanePadY) 0;
       margin: var(--laneGap) 0;
     }
+
     .lane::before{
       content:"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
       color: rgba(0,0,0,0.10);
@@ -372,10 +409,12 @@
       pointer-events:none;
       z-index:1;
     }
+
     .lane.good{
       border-color: rgba(42,157,88,0.95);
       box-shadow: inset 0 0 0 2px rgba(42,157,88,0.14);
     }
+
     .lane.bad{
       border-color: rgba(255,45,45,0.95);
       box-shadow: inset 0 0 0 2px rgba(255,45,45,0.14);
@@ -392,11 +431,24 @@
       animation-iteration-count: infinite;
       animation-play-state: running;
     }
-    .moving-row.ltr{ animation-name: scroll-ltr; }
-    .moving-row.rtl{ animation-name: scroll-rtl; }
 
-    @keyframes scroll-ltr{ from{ transform: translateX(0); } to{ transform: translateX(-33.333%);} }
-    @keyframes scroll-rtl{ from{ transform: translateX(-33.333%);} to{ transform: translateX(0);} }
+    .moving-row.ltr{
+      animation-name: scroll-ltr;
+    }
+
+    .moving-row.rtl{
+      animation-name: scroll-rtl;
+    }
+
+    @keyframes scroll-ltr{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-33.333%); }
+    }
+
+    @keyframes scroll-rtl{
+      from{ transform: translateX(-33.333%); }
+      to{ transform: translateX(0); }
+    }
 
     .symbol{
       width: clamp(var(--symbolMin), 7vw, var(--symbolMax));
@@ -410,15 +462,20 @@
       pointer-events:auto;
       touch-action: manipulation;
       border-radius: 10px;
+      position: relative;
+      z-index: 2;
     }
-    .symbol:active{ transform: scale(0.90); opacity: .85; }
+
+    .symbol:active{
+      transform: scale(0.90);
+      opacity: .85;
+    }
 
     .symbol.in-window{
       filter: drop-shadow(0 0 14px rgba(255,208,0,0.9));
       transform: scale(1.08);
     }
 
-    /* Burnt decoy style for Hard mode distractions */
     .symbol.burnt{
       filter: grayscale(0.55) sepia(0.45) brightness(0.72) contrast(1.08)
               drop-shadow(0 2px 3px rgba(0,0,0,0.15));
@@ -448,9 +505,15 @@
       color: var(--ink);
       text-shadow:none;
     }
-    .toast.show{ display:block; }
 
-    .success-flash{ animation: successFlash .26s ease; }
+    .toast.show{
+      display:block;
+    }
+
+    .success-flash{
+      animation: successFlash .26s ease;
+    }
+
     @keyframes successFlash{
       0%{ background-color: rgba(255,106,0,0); }
       50%{ background-color: rgba(255,106,0,0.18); }
@@ -469,7 +532,11 @@
       text-align:center;
       padding: 18px;
     }
-    .collapse-overlay.show{ display:flex; }
+
+    .collapse-overlay.show{
+      display:flex;
+    }
+
     .collapse-card{
       width: min(520px, 92vw);
       border: 2px solid rgba(255,255,255,0.18);
@@ -479,17 +546,20 @@
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
       backdrop-filter: blur(6px);
     }
+
     .collapse-card h2{
       font-size: 1.35rem;
       letter-spacing: .6px;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
+
     .collapse-card p{
       opacity: .92;
       margin: 8px 0 14px 0;
       line-height: 1.25;
     }
+
     .collapse-stats{
       display:flex;
       gap:10px;
@@ -497,6 +567,7 @@
       justify-content:center;
       margin-bottom: 12px;
     }
+
     .stat{
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.14);
@@ -516,6 +587,7 @@
       opacity:0.75;
       color: var(--ink);
     }
+
     .footer a{
       color: var(--ink);
       font-weight: 650;
@@ -530,7 +602,7 @@
       <div class="top-header">
         <div class="brand">
           <h1>Kitchen on Fire</h1>
-          <p>Tap the ingredient in the GOLD window before it burns</p>
+          <p>Tap the ingredient in the gold window before it burns</p>
         </div>
 
         <div class="controls">
@@ -538,7 +610,7 @@
           <span class="chip" id="progressCounter">0 / 1</span>
 
           <span class="chip" aria-label="Hearts">
-            <span>❤️</span>
+            <span>Lives</span>
             <span class="hearts" id="hearts"></span>
           </span>
 
@@ -591,11 +663,6 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /**
-     * /index.html
-     * Kitchen Fire — arcade chaos engine
-     */
-
     const INGREDIENTS = [
       { name: "Pepper",    file: "pepper.svg",    meaning: "Heat" },
       { name: "Plantain",  file: "plantain.svg",  meaning: "Sweetness" },
@@ -609,7 +676,6 @@
 
     const MODES = { NORMAL: "NORMAL", HARD: "HARD" };
 
-    // Levels evolve: more rows + larger ingredient pool + more density.
     const LEVELS = [
       { level: 1, rows: 1, pool: 4, baseSpeedSeconds: 15, baseLen: 22 },
       { level: 2, rows: 2, pool: 4, baseSpeedSeconds: 13, baseLen: 22 },
@@ -619,21 +685,19 @@
       { level: 6, rows: 4, pool: 8, baseSpeedSeconds: 9,  baseLen: 30 },
     ];
 
-    // Chaos (persistent across levels; resets only on death/restart)
     const CHAOS = {
       min: 1.00,
-      max: 2.20,         // cap: winnable but hard
+      max: 2.20,
       perHit: 0.03,
-      perSecond: 0.006,  // gentle background climb
-      mercyOnMistake: 0.06, // small relief to keep mobile gentle
+      perSecond: 0.006,
+      mercyOnMistake: 0.06,
     };
 
     const LIVES_MAX = 3;
 
-    // Hard mode distractions
     const HARD = {
-      burntRate: 0.18,     // chance a non-target becomes a burnt decoy
-      extraDensity: 1.15,  // more items (longer sequence)
+      burntRate: 0.18,
+      extraDensity: 1.15,
     };
 
     const topEl = document.getElementById("top");
@@ -666,25 +730,32 @@
     let lives = LIVES_MAX;
     let chaos = CHAOS.min;
     let chaosTickId = null;
+    let highlightTimerId = null;
+    let toastTimerId = null;
 
-    // Audio (drums) — must start after a user gesture
     let audioCtx = null;
     let drumTimerId = null;
 
     function showToast(msg, ms = 1200) {
+      if (toastTimerId) clearTimeout(toastTimerId);
       toast.textContent = msg;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), ms);
+      toastTimerId = setTimeout(() => {
+        toast.classList.remove("show");
+      }, ms);
     }
 
-    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+    function clamp(n, a, b){
+      return Math.max(a, Math.min(b, n));
+    }
 
     function shuffle(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [copy[i], copy[j]] = [copy[j], copy[i]];
       }
-      return arr;
+      return copy;
     }
 
     function rowDirection(rowIndex) {
@@ -709,23 +780,40 @@
 
     function updateWindowHighlights() {
       const selector =
-        (mode === MODES.HARD)
+        mode === MODES.HARD
           ? `.moving-row[data-row="${activeRowIndex}"] .symbol`
           : `.symbol`;
+
+      document.querySelectorAll(".symbol.in-window").forEach(img => {
+        img.classList.remove("in-window");
+      });
 
       document.querySelectorAll(selector).forEach(img => {
         img.classList.toggle("in-window", isInWindow(img));
       });
     }
-    setInterval(updateWindowHighlights, 100);
+
+    function startHighlightLoop() {
+      stopHighlightLoop();
+      highlightTimerId = setInterval(updateWindowHighlights, 100);
+    }
+
+    function stopHighlightLoop() {
+      if (highlightTimerId) clearInterval(highlightTimerId);
+      highlightTimerId = null;
+    }
 
     function setAllRowsState(state) {
-      document.querySelectorAll(".moving-row").forEach(r => r.style.animationPlayState = state);
+      document.querySelectorAll(".moving-row").forEach(r => {
+        r.style.animationPlayState = state;
+      });
     }
+
     function pauseRow(rowIndex) {
       const row = document.querySelector(`.moving-row[data-row="${rowIndex}"]`);
       if (row) row.style.animationPlayState = "paused";
     }
+
     function flashLane(rowIndex, kind) {
       const lane = document.querySelector(`.lane[data-row="${rowIndex}"]`);
       if (!lane) return;
@@ -738,8 +826,9 @@
       const root = document.documentElement.style;
       const vh = window.innerHeight || 800;
       const topH = topEl.getBoundingClientRect().height;
-      const paddingAndGaps = 10 * 2 + 10;
-      const machineAvailable = Math.max(240, vh - topH - paddingAndGaps);
+      const footerH = document.querySelector(".footer").getBoundingClientRect().height || 0;
+      const paddingAndGaps = 34;
+      const machineAvailable = Math.max(240, vh - topH - footerH - paddingAndGaps);
 
       const maxSymbol = Math.min(124, Math.floor(machineAvailable / (levelRows * 1.45)));
       const minSymbol = Math.max(52, Math.floor(maxSymbol * 0.78));
@@ -756,7 +845,7 @@
       heartsEl.innerHTML = "";
       for (let i = 0; i < LIVES_MAX; i++) {
         const s = document.createElement("span");
-        s.textContent = "❤️";
+        s.textContent = "❤";
         s.className = "heart" + (i < lives ? "" : " off");
         heartsEl.appendChild(s);
       }
@@ -791,17 +880,18 @@
 
     function buildTargetsForLevel(level) {
       const pool = INGREDIENTS.slice(0, level.pool);
-      const names = shuffle(pool.map(s => s.name).slice());
+      const names = shuffle(pool.map(s => s.name));
       const chosen = [];
+
       for (let r = 0; r < level.rows; r++) {
         const name = names[r % names.length];
         chosen.push({ rowIndex: r, name, done: false });
       }
+
       return chosen;
     }
 
     function computeTargetCount({ baseLen, speedSeconds }) {
-      // More speed => more frequent targets; but keep fair.
       const symPerSecond = baseLen / Math.max(1, speedSeconds);
       const approxGap = clamp(Math.round(2.2 * symPerSecond), 4, 10);
       const needed = Math.ceil(baseLen / approxGap) + 1;
@@ -811,21 +901,24 @@
     function pickTargetPositionsEven({ baseLen, targetCount }) {
       const positions = [];
       const step = Math.floor(baseLen / (targetCount + 1));
+
       for (let i = 1; i <= targetCount; i++) {
-        const jitter = Math.floor(Math.random() * (step * 0.3));
+        const jitter = Math.floor(Math.random() * Math.max(1, step * 0.3));
         const p = (i * step + jitter) % baseLen;
         positions.push(p);
       }
+
       const uniq = Array.from(new Set(positions));
       while (uniq.length < targetCount) {
         const p = Math.floor(Math.random() * baseLen);
         if (!uniq.includes(p)) uniq.push(p);
       }
-      uniq.sort((a,b) => a-b);
+
+      uniq.sort((a,b) => a - b);
       return uniq;
     }
 
-    function buildRowSequence({ level, rowIndex, speedSeconds, baseLen, targetName }) {
+    function buildRowSequence({ level, speedSeconds, baseLen, targetName }) {
       const pool = INGREDIENTS.slice(0, level.pool).map(x => x.name);
       const pattern = new Array(baseLen).fill(null);
 
@@ -842,29 +935,36 @@
       for (let i = 0; i < baseLen; i++) {
         if (pattern[i]) {
           const nm = pattern[i].name;
-          if (nm === last) streak += 1; else { last = nm; streak = 1; }
+          if (nm === last) streak += 1;
+          else { last = nm; streak = 1; }
           continue;
         }
 
         let pick = null;
         for (let tries = 0; tries < 60; tries++) {
           const candidate = pool[Math.floor(Math.random() * pool.length)];
-          if (candidate === targetName) continue; // keep targets special
+          if (candidate === targetName) continue;
           if (candidate === last && streak >= 2) continue;
           pick = candidate;
           break;
         }
-        if (!pick) pick = pool[0] === targetName ? pool[1] : pool[0];
 
-        // Hard mode distractions: occasionally create burnt decoys.
-        const burnt = (mode === MODES.HARD) && (Math.random() < HARD.burntRate);
+        if (!pick) {
+          pick = pool[0] === targetName ? pool[1] : pool[0];
+        }
 
-        pattern[i] = { name: pick, isTarget: false, state: burnt ? "burnt" : "fresh" };
+        const burnt = mode === MODES.HARD && Math.random() < HARD.burntRate;
 
-        if (pick === last) streak += 1; else { last = pick; streak = 1; }
+        pattern[i] = {
+          name: pick,
+          isTarget: false,
+          state: burnt ? "burnt" : "fresh"
+        };
+
+        if (pick === last) streak += 1;
+        else { last = pick; streak = 1; }
       }
 
-      // Repeat pattern 3× for seamless looping
       return [...pattern, ...pattern, ...pattern];
     }
 
@@ -923,7 +1023,9 @@
       setTimeout(() => document.body.classList.remove("success-flash"), 260);
 
       img.style.transform = "scale(1.2)";
-      setTimeout(() => img.style.transform = "", 150);
+      setTimeout(() => {
+        img.style.transform = "";
+      }, 150);
     }
 
     function loseLife(reason = "") {
@@ -935,7 +1037,6 @@
         return;
       }
 
-      // small mercy dip: keeps mobile gentle
       chaos = clamp(chaos - CHAOS.mercyOnMistake, CHAOS.min, CHAOS.max);
       updateHeatUI();
 
@@ -963,7 +1064,6 @@
     }
 
     function speedMultiplier() {
-      // chaos is 1.0..2.2 (higher => faster => shorter duration)
       return chaos;
     }
 
@@ -977,10 +1077,24 @@
       });
     }
 
-    function ensureAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      startDrums();
+    async function ensureAudio() {
+      if (!window.AudioContext && !window.webkitAudioContext) return;
+
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (audioCtx.state === "suspended") {
+        try {
+          await audioCtx.resume();
+        } catch (err) {
+          return;
+        }
+      }
+
+      if (!drumTimerId) {
+        startDrums();
+      }
     }
 
     function playKick(time, gainValue) {
@@ -1022,27 +1136,28 @@
     }
 
     function drumsBpm() {
-      // Calm ~72 BPM, Overload ~132 BPM
       const pct = clamp(chaosPct(), 0, 1);
       return 72 + (132 - 72) * pct;
     }
 
     function startDrums() {
       stopDrums();
+
       const schedule = () => {
-        if (!audioCtx) return;
+        if (!audioCtx || audioCtx.state !== "running") return;
+
         const bpm = drumsBpm();
         const intervalMs = 60000 / bpm;
 
         const t = audioCtx.currentTime;
         const pct = clamp(chaosPct(), 0, 1);
 
-        // Layering: kick always, click comes in later
         playKick(t, 0.06 + 0.05 * pct);
         if (pct >= 0.55) playClick(t + 0.02, 0.03 + 0.03 * pct);
 
         drumTimerId = setTimeout(schedule, intervalMs);
       };
+
       schedule();
     }
 
@@ -1052,15 +1167,14 @@
     }
 
     function retimeDrums() {
-      // restart schedule to adapt immediately at major heat changes
-      if (!audioCtx) return;
+      if (!audioCtx || audioCtx.state !== "running") return;
       startDrums();
     }
 
     function sfxSuccess() {
-      if (!audioCtx) return;
-      const t = audioCtx.currentTime;
+      if (!audioCtx || audioCtx.state !== "running") return;
 
+      const t = audioCtx.currentTime;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
@@ -1080,10 +1194,10 @@
       osc.stop(t + 0.25);
     }
 
-    function handleSymbolClick(img) {
+    async function handleSymbolClick(img) {
       if (levelComplete) return;
 
-      ensureAudio();
+      await ensureAudio();
 
       const rowIndex = Number(img.dataset.row);
       const name = img.dataset.name;
@@ -1091,29 +1205,26 @@
 
       if (!isInWindow(img)) return;
 
-      // Hard mode: only active row counts (row-by-row)
       if (mode === MODES.HARD && rowIndex !== activeRowIndex) {
         return;
       }
 
-      // Burnt items are always wrong taps (distraction)
       if (state === "burnt") {
         flashLane(rowIndex, "bad");
-        loseLife("🔥 Burnt — careful");
+        loseLife("Burnt ingredient");
         return;
       }
 
       const target = targets.find(t => t.rowIndex === rowIndex);
       if (!target || target.done) return;
 
-      const match = (name === target.name);
+      const match = name === target.name;
       if (!match) {
         flashLane(rowIndex, "bad");
-        loseLife("❌ Wrong ingredient");
+        loseLife("Wrong ingredient");
         return;
       }
 
-      // Correct
       bumpChaosOnHit();
       updateHeatUI();
       retimeRows();
@@ -1132,7 +1243,10 @@
       }
 
       renderTargets();
-      if (targets.every(t => t.done)) onLevelWin();
+
+      if (targets.every(t => t.done)) {
+        onLevelWin();
+      }
     }
 
     rowsArea.addEventListener("click", (e) => {
@@ -1160,7 +1274,6 @@
         movingRow.className = `moving-row ${rowDirection(r)}`;
         movingRow.dataset.row = String(r);
 
-        // More density in Hard mode (more distraction)
         const lenBase = level.baseLen * (mode === MODES.HARD ? HARD.extraDensity : 1.0);
         const baseLen = Math.round(lenBase);
 
@@ -1171,7 +1284,6 @@
         const rowTarget = targets.find(t => t.rowIndex === r);
         const seq = buildRowSequence({
           level,
-          rowIndex: r,
           speedSeconds: dur,
           baseLen,
           targetName: rowTarget.name,
@@ -1188,8 +1300,8 @@
           el.dataset.row = String(r);
           el.dataset.name = it.name;
           el.dataset.state = it.state;
-
           el.setAttribute("aria-label", `${it.name}${it.state === "burnt" ? " burnt" : ""}`);
+
           movingRow.appendChild(el);
         }
 
@@ -1198,24 +1310,29 @@
       }
 
       renderTargets();
-      requestAnimationFrame(() => applyResponsiveSizing(level.rows));
+      requestAnimationFrame(() => {
+        applyResponsiveSizing(level.rows);
+        updateWindowHighlights();
+      });
+
       setAllRowsState("running");
       startChaosTick();
+      startHighlightLoop();
     }
 
     function onLevelWin() {
       levelComplete = true;
+      stopChaosTick();
       setAllRowsState("paused");
 
-      // tiny reward: regain 1 heart, capped
       lives = Math.min(LIVES_MAX, lives + 1);
-
       const levelNum = LEVELS[currentLevelIndex].level;
-      showToast(`✅ LEVEL ${levelNum} SERVED!`, 1100);
+      showToast(`Level ${levelNum} served`, 1100);
 
       setTimeout(() => {
-        currentLevelIndex = (currentLevelIndex >= LEVELS.length - 1) ? 0 : (currentLevelIndex + 1);
+        currentLevelIndex = currentLevelIndex >= LEVELS.length - 1 ? 0 : currentLevelIndex + 1;
         machineEl.style.opacity = "0";
+
         setTimeout(() => {
           buildLevel(currentLevelIndex);
           machineEl.style.opacity = "1";
@@ -1228,14 +1345,11 @@
       stopChaosTick();
       setAllRowsState("paused");
 
-      // slow collapse
       machineEl.classList.add("collapse");
       collapseOverlay.classList.add("show");
       collapseOverlay.setAttribute("aria-hidden", "false");
 
-      // soften drums
       if (audioCtx) {
-        // stop scheduling new hits and let existing tails fade
         stopDrums();
       }
 
@@ -1252,21 +1366,23 @@
       collapseOverlay.classList.remove("show");
       collapseOverlay.setAttribute("aria-hidden", "true");
 
-      // reset run state
       lives = LIVES_MAX;
       chaos = CHAOS.min;
       currentLevelIndex = 0;
+      levelComplete = false;
 
       updateHUD();
 
-      if (audioCtx) {
+      if (audioCtx && audioCtx.state === "running") {
         startDrums();
       }
 
       buildLevel(currentLevelIndex);
     }
 
-    function setMode(newMode) {
+    function setMode(newMode, options = {}) {
+      const { silent = false } = options;
+
       mode = newMode;
       modeNormalBtn.classList.toggle("active", mode === MODES.NORMAL);
       modeHardBtn.classList.toggle("active", mode === MODES.HARD);
@@ -1274,25 +1390,36 @@
       const next = targets.find(t => !t.done);
       activeRowIndex = next ? next.rowIndex : 0;
 
-      renderTargets();
-      showToast(mode === MODES.NORMAL ? "🍲 Normal: Any order" : "🔥 Hard: Row by row + distractions", 850);
+      if (!silent) {
+        showToast(
+          mode === MODES.NORMAL
+            ? "Normal mode: any order"
+            : "Hard mode: row by row with distractions",
+          900
+        );
+      }
 
-      // rebuild current level to apply density + distractions
       buildLevel(currentLevelIndex);
     }
 
     resetButton.addEventListener("click", restartRun);
     collapseRestart.addEventListener("click", restartRun);
-    modeNormalBtn.addEventListener("click", () => setMode(MODES.NORMAL));
-    modeHardBtn.addEventListener("click", () => setMode(MODES.HARD));
-    window.addEventListener("resize", () => applyResponsiveSizing(LEVELS[currentLevelIndex].rows));
+    modeNormalBtn.addEventListener("click", () => {
+      if (mode !== MODES.NORMAL) setMode(MODES.NORMAL);
+    });
+    modeHardBtn.addEventListener("click", () => {
+      if (mode !== MODES.HARD) setMode(MODES.HARD);
+    });
 
-    window.onload = () => {
-      // Do not start audio until the first tap.
+    window.addEventListener("resize", () => {
+      applyResponsiveSizing(LEVELS[currentLevelIndex].rows);
+      updateWindowHighlights();
+    });
+
+    window.addEventListener("load", () => {
       updateHUD();
-      buildLevel(currentLevelIndex);
-      setMode(MODES.NORMAL);
-    };
+      setMode(MODES.NORMAL, { silent: true });
+    });
   </script>
 </body>
 </html>
