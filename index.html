@@ -1,1467 +1,1268 @@
-<!-- index.html -->
+<!-- /index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <title>Kitchen Fire</title>
-
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>Kitchen Pair Rush</title>
   <style>
-    :root{
-      --bg: #f3e6d8;
-      --ink: #1f140e;
-      --muted: rgba(31,20,14,0.68);
-      --line: rgba(31,20,14,0.16);
-      --paper: rgba(255,255,255,0.76);
-      --shadow: 0 12px 26px rgba(0,0,0,0.12);
-      --r: 12px;
-
-      --ember: #ff6a00;
-      --flame: #ff2d2d;
-      --gold: #D4AF37;
-      --earth: #8B4513;
-
-      --windowW: clamp(170px, 22vw, 260px);
-      --lanePadY: 10px;
-      --laneGap: 10px;
-      --symbolMin: 62px;
-      --symbolMax: 92px;
+    :root {
+      --bg: #0f0b08;
+      --panel: #1b140f;
+      --panel-2: #2a1f18;
+      --ink: #fff4e8;
+      --muted: rgba(255, 244, 232, 0.72);
+      --line: rgba(255, 244, 232, 0.12);
+      --gold: #ffd166;
+      --good: #51cf66;
+      --bad: #ff6b6b;
+      --accent: #ff922b;
+      --shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+      --lane-w: min(34vw, 180px);
+      --item-size: clamp(64px, 14vw, 94px);
+      --hit-h: 104px;
+      --radius: 18px;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    html, body {
+    html,
+    body {
       height: 100%;
     }
 
-    body{
-      font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(900px 480px at 50% -10%, rgba(255, 146, 43, 0.18), transparent),
+        linear-gradient(180deg, #21160f 0%, #120d09 100%);
       color: var(--ink);
       min-height: 100vh;
-      display:flex;
-      justify-content:center;
-      align-items:stretch;
-      padding:0;
-      transition: background-color .12s ease;
-    }
-
-    .wrap{
-      width: min(1400px, 98vw);
-      margin: 0 auto;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      height: 100vh;
+      display: flex;
+      justify-content: center;
       padding: 10px;
     }
 
-    .top{
-      background: linear-gradient(180deg, #ff9f1a, #8a2d00);
+    .app {
+      width: min(960px, 100%);
+      min-height: calc(100vh - 20px);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 10px;
+    }
+
+    .topbar,
+    .stats,
+    .footer {
+      background: rgba(27, 20, 15, 0.92);
       border: 1px solid var(--line);
-      border-radius: var(--r);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 10px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      flex: 0 0 auto;
-      overflow:hidden;
-      color: white;
-      text-shadow: 2px 2px 0 rgba(0,0,0,0.18);
     }
 
-    .top-header{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
+    .topbar {
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
-    .brand{
-      flex:1;
-      min-width: 260px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
+    .brand {
+      min-width: 220px;
     }
 
-    .brand h1{
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .6px;
-      font-size: clamp(1.05rem, 1.8vw, 1.45rem);
-      line-height: 1.0;
-    }
-
-    .brand p{
-      color: rgba(255,255,255,.93);
-      line-height: 1.2;
-      font-size: clamp(.86rem, 1.2vw, .98rem);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .controls{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .chip{
-      background: rgba(255,255,255,0.92);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 7px 10px;
-      font-weight: 1000;
-      letter-spacing: .2px;
-      white-space: nowrap;
-      font-size: .88rem;
-      color: var(--ink);
-      text-shadow: none;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .hearts{
-      display:flex;
-      align-items:center;
-      gap:4px;
-      font-size: 1.05rem;
+    .brand h1 {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
       line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 1000;
     }
 
-    .heart.off{
-      opacity: .26;
-      filter: grayscale(1);
+    .brand p {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .mode{
-      display:flex;
-      border: 1px solid var(--line);
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip,
+    .btn {
       border-radius: 999px;
-      overflow:hidden;
-      background: rgba(255,255,255,0.92);
-    }
-
-    .mode button{
-      border:none;
-      background: transparent;
-      padding: 7px 12px;
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .25px;
-      cursor:pointer;
-      color: rgba(31,20,14,0.85);
-      font-size: .84rem;
-    }
-
-    .mode button.active{
-      background: rgba(255,255,255,0.35);
-      box-shadow: inset 0 0 0 1px rgba(31,20,14,0.10);
-      color: #2b1100;
-    }
-
-    .btn{
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.92);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-weight: 1000;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--ink);
+      padding: 9px 12px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
-      letter-spacing: .25px;
-      cursor:pointer;
-      font-size: .84rem;
-    }
-
-    .btn:active{
-      transform: translateY(1px);
-    }
-
-    .meter{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex: 1 1 320px;
-      min-width: 260px;
-    }
-
-    .meter .label{
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .35px;
+      font-size: 0.82rem;
       white-space: nowrap;
-      color: rgba(255,255,255,0.95);
     }
 
-    .bar{
+    .btn {
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: linear-gradient(180deg, #ffb04d, #ff8c1a);
+      color: #2a1200;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .stats {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .meter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1 1 280px;
+      min-width: 220px;
+    }
+
+    .meter-label {
+      font-weight: 1000;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .meter {
       position: relative;
       height: 12px;
-      flex:1;
-      min-width: 140px;
+      flex: 1;
       border-radius: 999px;
-      background: rgba(255,255,255,0.28);
-      border: 1px solid rgba(255,255,255,0.35);
-      overflow:hidden;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
     }
 
-    .bar > .fill{
-      position:absolute;
-      inset:0;
+    .meter-fill {
+      position: absolute;
+      inset: 0;
       width: 0%;
       border-radius: 999px;
-      background: linear-gradient(90deg, #ffd000, #ff8a00, #ff2d2d);
-      transition: width .15s linear;
+      background: linear-gradient(90deg, #51cf66, #ffd43b, #ff922b, #ff6b6b);
+      transition: width 120ms linear;
     }
 
-    .bar.pulse > .fill{
-      animation: pulseBar .9s infinite;
-    }
-
-    @keyframes pulseBar{
-      0%{ filter: brightness(1); }
-      50%{ filter: brightness(1.25); }
-      100%{ filter: brightness(1); }
-    }
-
-    .targets{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      border-top: 1px solid rgba(255,255,255,0.28);
-      padding-top: 8px;
-    }
-
-    .targets .label{
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .35px;
-      color:white;
-      white-space: nowrap;
-    }
-
-    #targetContainer{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      flex:1;
-      flex-wrap:wrap;
-      overflow:hidden;
-    }
-
-    .target-tag{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.95);
-      height: 62px;
-      min-width: 260px;
-      max-width: 360px;
-      flex: 1 1 260px;
-      transition: all .2s ease;
-      color: var(--ink);
-      text-shadow:none;
-    }
-
-    .target-tag.done{
-      opacity: .62;
-    }
-
-    .target-tag.active{
-      outline: 4px solid rgba(255,208,0,0.95);
-      outline-offset: 2px;
-      transform: scale(1.02);
-      box-shadow: 0 0 16px rgba(255,208,0,0.85);
-    }
-
-    .target-tag img{
-      width: 46px;
-      height: 46px;
-      object-fit: contain;
-      flex:0 0 auto;
-    }
-
-    .target-meta{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width:0;
-      flex:1;
-    }
-
-    .target-meta .name{
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .25px;
-      font-size: .92rem;
-      line-height: 1.05;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      color: var(--ink);
-    }
-
-    .target-meta .meaning{
-      display:block;
-      visibility:hidden;
-      height: 1.1em;
-      color: rgba(31,20,14,0.72);
-      font-size: .80rem;
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-
-    .target-tag.done .target-meta .meaning{
-      visibility: visible;
-    }
-
-    .pill{
-      border: 1px solid rgba(31,20,14,0.18);
-      background: rgba(255,255,255,0.92);
-      border-radius: 999px;
-      padding: 6px 9px;
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: .2px;
-      font-size: .76rem;
-      white-space: nowrap;
-      flex: 0 0 auto;
-      color: var(--ink);
-    }
-
-    .machine{
-      position: relative;
-      border: 8px solid #4a3729;
-      border-radius: 20px;
-      background:
-        radial-gradient(1200px 500px at 50% 110%, rgba(255,80,0,0.35), rgba(0,0,0,0)),
-        linear-gradient(145deg, #2a1e14, #1a120b);
-      box-shadow:
-        0 20px 30px rgba(0,0,0,0.5),
-        inset 0 0 28px rgba(255, 140, 0, 0.22);
-      padding: 10px;
-      overflow:hidden;
-      flex: 1 1 auto;
-      min-height: 0;
-      transition: opacity 180ms ease, filter 450ms ease, transform 450ms ease;
-    }
-
-    .machine.collapse{
-      filter: grayscale(0.4) blur(1px) brightness(0.92);
-      transform: scale(0.995);
-    }
-
-    #rowsArea{
-      position: relative;
-      z-index: 2;
-      height: 100%;
+    .target-card {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 100%;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      min-height: 74px;
     }
 
-    .window{
-      position:absolute;
-      left:50%;
-      top:10px;
-      bottom:10px;
-      width: var(--windowW);
-      transform: translateX(-50%);
-      border-radius: 0;
-      border: 4px solid rgba(255,208,0,0.95);
-      box-shadow:
-        inset 0 0 0 2px rgba(255,255,255,0.62),
-        0 0 18px rgba(255,208,0,0.75);
-      pointer-events:none;
-      z-index:4;
-      animation: windowPulse 2s infinite;
-    }
-
-    @keyframes windowPulse{
-      0%{ opacity:.78; }
-      50%{ opacity:1; box-shadow: 0 0 26px rgba(255,208,0,0.95); }
-      100%{ opacity:.78; }
-    }
-
-    .lane{
-      position:relative;
-      overflow:hidden;
-      border-radius:0;
-      border: 1px solid rgba(31,20,14,0.18);
-      background:
-        linear-gradient(to right, rgba(243,230,216,0.98), rgba(243,230,216,0) 70px),
-        linear-gradient(to left,  rgba(243,230,216,0.98), rgba(243,230,216,0) 70px),
-        rgba(255,255,255,0.94);
-      padding: var(--lanePadY) 0;
-      margin: var(--laneGap) 0;
-    }
-
-    .lane::before{
-      content:"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
-      color: rgba(0,0,0,0.10);
-      font-size: 20px;
-      position:absolute;
-      width:100%;
-      text-align:center;
-      letter-spacing:20px;
-      bottom:0;
-      pointer-events:none;
-      z-index:1;
-    }
-
-    .lane.good{
-      border-color: rgba(42,157,88,0.95);
-      box-shadow: inset 0 0 0 2px rgba(42,157,88,0.14);
-    }
-
-    .lane.bad{
-      border-color: rgba(255,45,45,0.95);
-      box-shadow: inset 0 0 0 2px rgba(255,45,45,0.14);
-    }
-
-    .moving-row{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      width: max-content;
-      will-change: transform;
-      animation-duration: var(--speed, 12s);
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-play-state: running;
-    }
-
-    .moving-row.ltr{
-      animation-name: scroll-ltr;
-    }
-
-    .moving-row.rtl{
-      animation-name: scroll-rtl;
-    }
-
-    @keyframes scroll-ltr{
-      from{ transform: translateX(0); }
-      to{ transform: translateX(-33.333%); }
-    }
-
-    @keyframes scroll-rtl{
-      from{ transform: translateX(-33.333%); }
-      to{ transform: translateX(0); }
-    }
-
-    .symbol{
-      width: clamp(var(--symbolMin), 7vw, var(--symbolMax));
-      height: clamp(var(--symbolMin), 7vw, var(--symbolMax));
+    .target-card img {
+      width: 52px;
+      height: 52px;
       object-fit: contain;
-      cursor:pointer;
-      user-select:none;
-      -webkit-user-select:none;
-      transform: translateZ(0);
-      transition: transform .08s ease, opacity .08s ease, filter .08s ease;
-      pointer-events:auto;
-      touch-action: manipulation;
+      flex: 0 0 auto;
       border-radius: 10px;
-      position: relative;
-      z-index: 2;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255, 255, 255, 0.04);
       padding: 4px;
     }
 
-    .symbol:active{
-      transform: scale(0.90);
-      opacity: .85;
+    .target-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
     }
 
-    .symbol.in-window{
-      filter: drop-shadow(0 0 14px rgba(255,208,0,0.9));
-      transform: scale(1.08);
-    }
-
-    .symbol.burnt{
-      filter: grayscale(0.55) sepia(0.45) brightness(0.72) contrast(1.08)
-              drop-shadow(0 2px 3px rgba(0,0,0,0.15));
-      opacity: 0.92;
-    }
-
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%);
-      padding: 10px 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.94);
-      box-shadow: var(--shadow);
-      border-radius: 999px;
+    .target-name {
       font-weight: 1000;
       text-transform: uppercase;
-      letter-spacing: .25px;
-      display:none;
-      z-index: 999;
-      max-width: min(92vw, 820px);
-      text-align:center;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      color: var(--ink);
-      text-shadow:none;
+      letter-spacing: 0.03em;
+      line-height: 1;
     }
 
-    .toast.show{
-      display:block;
+    .target-rule {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.15;
     }
 
-    .success-flash{
-      animation: successFlash .26s ease;
+    .playfield {
+      position: relative;
+      background:
+        radial-gradient(700px 260px at 50% 50%, rgba(255, 209, 102, 0.08), transparent 58%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)),
+        var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(110px, 1fr) minmax(140px, 220px) minmax(110px, 1fr);
+      min-height: 420px;
     }
 
-    @keyframes successFlash{
-      0%{ background-color: rgba(255,106,0,0); }
-      50%{ background-color: rgba(255,106,0,0.18); }
-      100%{ background-color: rgba(255,106,0,0); }
+    .lane {
+      position: relative;
+      overflow: hidden;
+      border-inline: 1px solid rgba(255, 255, 255, 0.05);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));
     }
 
-    .collapse-overlay{
+    .lane::before,
+    .lane::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 1;
+    }
+
+    .lane::before {
+      top: calc(50% - var(--hit-h) / 2);
+    }
+
+    .lane::after {
+      top: calc(50% + var(--hit-h) / 2);
+    }
+
+    .lane-track {
       position: absolute;
       inset: 0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index: 20;
-      background: radial-gradient(900px 420px at 50% 70%, rgba(0,0,0,0.42), rgba(0,0,0,0.72));
-      color: white;
-      text-align:center;
-      padding: 18px;
     }
 
-    .collapse-overlay.show{
-      display:flex;
+    .item {
+      position: absolute;
+      left: 50%;
+      width: var(--item-size);
+      height: var(--item-size);
+      margin-left: calc(var(--item-size) / -2);
+      transform: translateY(-50%);
+      user-select: none;
+      pointer-events: none;
+      transition: filter 90ms ease, transform 90ms ease;
+      z-index: 2;
     }
 
-    .collapse-card{
-      width: min(520px, 92vw);
-      border: 2px solid rgba(255,255,255,0.18);
-      border-radius: 18px;
-      padding: 18px 16px;
-      background: rgba(0,0,0,0.35);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-      backdrop-filter: blur(6px);
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: 0 10px 16px rgba(0, 0, 0, 0.18);
     }
 
-    .collapse-card h2{
-      font-size: 1.35rem;
-      letter-spacing: .6px;
+    .item.active img {
+      outline: 3px solid rgba(255, 209, 102, 0.9);
+      box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.14), 0 10px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .item.good {
+      transform: translateY(-50%) scale(1.1);
+      filter: drop-shadow(0 0 16px rgba(81, 207, 102, 0.7));
+    }
+
+    .item.bad {
+      transform: translateY(-50%) scale(0.94);
+      filter: drop-shadow(0 0 14px rgba(255, 107, 107, 0.7));
+    }
+
+    .color-red img { filter: hue-rotate(0deg) saturate(1.05); }
+    .color-green img { filter: hue-rotate(100deg) saturate(1.1); }
+    .color-blue img { filter: hue-rotate(200deg) saturate(1.05); }
+    .color-gold img { filter: hue-rotate(25deg) saturate(1.25) brightness(1.03); }
+
+    .center-zone {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-inline: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        radial-gradient(300px 220px at 50% 50%, rgba(255, 209, 102, 0.12), transparent 70%);
+    }
+
+    .hit-window {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 50%;
+      height: var(--hit-h);
+      transform: translateY(-50%);
+      border-radius: 20px;
+      border: 3px solid rgba(255, 209, 102, 0.95);
+      box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.3),
+        0 0 18px rgba(255, 209, 102, 0.38);
+      pointer-events: none;
+    }
+
+    .match-btn {
+      position: relative;
+      z-index: 3;
+      width: min(84%, 180px);
+      min-height: 110px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08)),
+        rgba(255, 255, 255, 0.04);
+      color: var(--ink);
+      font-weight: 1000;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      padding: 14px 12px;
+      box-shadow: var(--shadow);
+      touch-action: manipulation;
     }
 
-    .collapse-card p{
-      opacity: .92;
-      margin: 8px 0 14px 0;
-      line-height: 1.25;
+    .match-btn:active {
+      transform: scale(0.98);
     }
 
-    .collapse-stats{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-bottom: 12px;
+    .match-btn .big {
+      display: block;
+      font-size: 1.08rem;
+      line-height: 1;
     }
 
-    .stat{
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.14);
+    .match-btn .small {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.2;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 700;
+    }
+
+    .connect-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 6px;
+      transform: translate(-50%, -50%);
       border-radius: 999px;
-      padding: 8px 10px;
-      font-weight: 900;
-      letter-spacing: .25px;
+      background: linear-gradient(90deg, rgba(81, 207, 102, 0), rgba(81, 207, 102, 1), rgba(81, 207, 102, 0));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .connect-line.show {
+      animation: lineFlash 260ms ease;
+    }
+
+    @keyframes lineFlash {
+      0% { width: 0; opacity: 0; }
+      25% { width: 72%; opacity: 1; }
+      100% { width: 82%; opacity: 0; }
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 5;
+      max-width: calc(100% - 24px);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(20, 15, 11, 0.92);
+      box-shadow: var(--shadow);
       text-transform: uppercase;
-      font-size: .86rem;
+      font-weight: 1000;
+      letter-spacing: 0.04em;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: none;
     }
 
-    .footer{
-      text-align:center;
-      font-size:0.85rem;
-      margin-top:6px;
-      opacity:0.75;
-      color: var(--ink);
+    .toast.show {
+      display: block;
     }
 
-    .footer a{
-      color: var(--ink);
-      font-weight: 650;
-      text-decoration: underline;
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(10, 8, 6, 0.66);
+      backdrop-filter: blur(4px);
+    }
+
+    .overlay.show {
+      display: grid;
+    }
+
+    .card {
+      width: min(420px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      box-shadow: var(--shadow);
+      padding: 18px;
+      text-align: center;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      font-weight: 1000;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .card .row {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer {
+      padding: 10px 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .lives {
+      letter-spacing: 0.14em;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        grid-template-rows: auto auto 1fr;
+      }
+
+      .playfield {
+        min-height: 58vh;
+        grid-template-columns: minmax(100px, 1fr) minmax(118px, 160px) minmax(100px, 1fr);
+      }
+
+      .match-btn {
+        min-height: 96px;
+      }
+
+      .footer {
+        display: none;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="top" id="top">
-      <div class="top-header">
-        <div class="brand">
-          <h1>Kitchen on Fire</h1>
-          <p>Tap the ingredient in the gold window before it burns</p>
-        </div>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Kitchen Pair Rush</h1>
+        <p>Match the same ingredient in both lanes while they share the center window.</p>
+      </div>
 
-        <div class="controls">
-          <span class="chip" id="levelDisplay">LEVEL 1</span>
-          <span class="chip" id="progressCounter">0 / 1</span>
+      <div class="controls">
+        <div class="chip" id="levelChip">Level 1</div>
+        <div class="chip" id="scoreChip">Score 0</div>
+        <div class="chip" id="comboChip">Combo x1</div>
+        <div class="chip lives" id="livesChip">❤❤❤</div>
+        <button class="btn" id="restartButton" type="button">Restart</button>
+      </div>
+    </header>
 
-          <span class="chip" aria-label="Hearts">
-            <span>Lives</span>
-            <span class="hearts" id="hearts"></span>
-          </span>
-
-          <div class="mode" aria-label="Mode">
-            <button id="modeNormal" type="button" class="active">Normal</button>
-            <button id="modeHard" type="button">Hard</button>
+    <section class="stats">
+      <div class="stats-row">
+        <div class="meter-wrap">
+          <div class="meter-label">Progress</div>
+          <div class="meter" aria-label="Level progress">
+            <div class="meter-fill" id="progressFill"></div>
           </div>
-
-          <button class="btn" id="resetButton" type="button">Restart</button>
         </div>
+        <div class="chip" id="goalChip">0 / 6</div>
       </div>
 
-      <div class="meter" aria-label="Chaos meter">
-        <div class="label">Heat</div>
-        <div class="bar" id="chaosBar"><div class="fill" id="chaosFill"></div></div>
-        <span class="chip" id="heatLabel">CALM</span>
-      </div>
-
-      <div class="targets">
-        <div class="label">Cook</div>
-        <div id="targetContainer"></div>
-      </div>
-    </div>
-
-    <div class="machine" id="machine">
-      <div class="window" id="slotWindow" aria-hidden="true"></div>
-      <div id="rowsArea"></div>
-
-      <div class="collapse-overlay" id="collapseOverlay" aria-hidden="true">
-        <div class="collapse-card">
-          <h2>Kitchen Overheated</h2>
-          <p>The heat got away from you. Reset and try again.</p>
-          <div class="collapse-stats">
-            <div class="stat" id="statLevel">Level: 1</div>
-            <div class="stat" id="statHeat">Heat: 0%</div>
+      <div class="target-card">
+        <img id="targetPreview" alt="Target preview" src="images/pepper.svg" />
+        <div class="target-meta">
+          <div class="target-name" id="ruleTitle">Level rule</div>
+          <div class="target-rule" id="ruleText">
+            Match the same ingredient in both lanes.
           </div>
-          <button class="btn" id="collapseRestart" type="button">Restart</button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">
-      Created by
-      <a href="https://www.theafricangourmet.com/p/home.html" target="_blank" rel="noreferrer">African Gourmet Archives</a>
-      ·
-      <a href="https://chicafricanculture.github.io/african-foodways-data/" target="_blank" rel="noreferrer">GitHub</a>
-    </div>
+    <main class="playfield" id="playfield">
+      <section class="lane" aria-label="Left lane">
+        <div class="lane-track" id="leftLane"></div>
+      </section>
+
+      <section class="center-zone">
+        <div class="hit-window" aria-hidden="true"></div>
+        <button class="match-btn" id="matchButton" type="button" aria-label="Match now">
+          <span class="big">Tap to Match</span>
+          <span class="small">or press Space</span>
+        </button>
+        <div class="connect-line" id="connectLine"></div>
+      </section>
+
+      <section class="lane" aria-label="Right lane">
+        <div class="lane-track" id="rightLane"></div>
+      </section>
+
+      <div class="toast" id="toast"></div>
+
+      <div class="overlay show" id="startOverlay">
+        <div class="card">
+          <h2>Ready to Cook?</h2>
+          <p>
+            The left lane moves up. The right lane moves down.
+            Tap when the same pair is inside the center window together.
+          </p>
+          <div class="row">
+            <button class="btn primary" id="startButton" type="button">Start Game</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" id="endOverlay">
+        <div class="card">
+          <h2 id="endTitle">Stage Clear</h2>
+          <p id="endText">Nice work.</p>
+          <div class="row">
+            <div class="chip" id="endScore">Score 0</div>
+            <div class="chip" id="endBest">Best Combo 1</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" id="nextButton" type="button">Next</button>
+            <button class="btn" id="playAgainButton" type="button">Restart</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      Mobile-first. Tap the center button when both lanes show the same ingredient inside the middle window.
+    </footer>
   </div>
-
-  <div class="toast" id="toast"></div>
 
   <script>
     const INGREDIENTS = [
-      { name: "Pepper",   meaning: "Heat",       emoji: "🌶️", color: "#ff5a36" },
-      { name: "Plantain", meaning: "Sweetness",  emoji: "🍌", color: "#f2c94c" },
-      { name: "Fish",     meaning: "Protein",    emoji: "🐟", color: "#63b3ed" },
-      { name: "Yam",      meaning: "Staple",     emoji: "🥔", color: "#d6a56f" },
-      { name: "Onion",    meaning: "Base",       emoji: "🧅", color: "#b794f4" },
-      { name: "Tomato",   meaning: "Body",       emoji: "🍅", color: "#ef4444" },
-      { name: "Egusi",    meaning: "Thickener",  emoji: "🟡", color: "#eab308" },
-      { name: "Palm Oil", meaning: "Flavor",     emoji: "🧴", color: "#f97316" },
+      { name: "Pepper", file: "pepper.svg" },
+      { name: "Plantain", file: "plantain.svg" },
+      { name: "Fish", file: "fish.svg" },
+      { name: "Yam", file: "yam.svg" },
+      { name: "Onion", file: "onion.svg" },
+      { name: "Tomato", file: "tomato.svg" },
+      { name: "Egusi", file: "egusi.svg" },
+      { name: "Palm Oil", file: "palm-oil.svg" }
     ];
 
-    const MODES = { NORMAL: "NORMAL", HARD: "HARD" };
+    const COLORS = ["red", "green", "blue", "gold"];
 
     const LEVELS = [
-      { level: 1, rows: 1, pool: 4, baseSpeedSeconds: 15, baseLen: 22 },
-      { level: 2, rows: 2, pool: 4, baseSpeedSeconds: 13, baseLen: 22 },
-      { level: 3, rows: 3, pool: 6, baseSpeedSeconds: 12, baseLen: 24 },
-      { level: 4, rows: 3, pool: 6, baseSpeedSeconds: 11, baseLen: 26 },
-      { level: 5, rows: 4, pool: 8, baseSpeedSeconds: 10, baseLen: 28 },
-      { level: 6, rows: 4, pool: 8, baseSpeedSeconds: 9,  baseLen: 30 },
+      {
+        level: 1,
+        goal: 6,
+        speedLeft: 120,
+        speedRight: 120,
+        spawnMs: 900,
+        hitWindow: 56,
+        pool: 4,
+        colorMode: false,
+        title: "Level 1: Shape match",
+        text: "Tap when the same ingredient appears in both lanes."
+      },
+      {
+        level: 2,
+        goal: 8,
+        speedLeft: 150,
+        speedRight: 150,
+        spawnMs: 760,
+        hitWindow: 50,
+        pool: 4,
+        colorMode: false,
+        title: "Level 2: Faster",
+        text: "Same rule. Slightly faster movement and tighter timing."
+      },
+      {
+        level: 3,
+        goal: 10,
+        speedLeft: 170,
+        speedRight: 170,
+        spawnMs: 700,
+        hitWindow: 46,
+        pool: 5,
+        colorMode: true,
+        title: "Level 3: Color match",
+        text: "Now both the ingredient and the color must match."
+      },
+      {
+        level: 4,
+        goal: 12,
+        speedLeft: 190,
+        speedRight: 190,
+        spawnMs: 650,
+        hitWindow: 40,
+        pool: 6,
+        colorMode: true,
+        title: "Level 4: Tight timing",
+        text: "Same color rule. Smaller timing window."
+      },
+      {
+        level: 5,
+        goal: 14,
+        speedLeft: 210,
+        speedRight: 210,
+        spawnMs: 600,
+        hitWindow: 36,
+        pool: 8,
+        colorMode: true,
+        title: "Level 5: More decoys",
+        text: "More ingredient types increase visual pressure."
+      },
+      {
+        level: 6,
+        goal: 16,
+        speedLeft: 225,
+        speedRight: 255,
+        spawnMs: 560,
+        hitWindow: 34,
+        pool: 8,
+        colorMode: true,
+        title: "Level 6: Lane desync",
+        text: "The two lanes no longer move at the same speed."
+      }
     ];
 
-    const CHAOS = {
-      min: 1.00,
-      max: 2.20,
-      perHit: 0.03,
-      perSecond: 0.006,
-      mercyOnMistake: 0.06,
-    };
+    const MAX_LIVES = 3;
+    const ITEM_SIZE = 84;
+    const SPAWN_PADDING = 120;
+    const START_Y_OFFSET = 90;
+    const END_Y_OFFSET = 90;
 
-    const LIVES_MAX = 3;
+    const leftLaneEl = document.getElementById("leftLane");
+    const rightLaneEl = document.getElementById("rightLane");
+    const playfieldEl = document.getElementById("playfield");
+    const matchButton = document.getElementById("matchButton");
+    const restartButton = document.getElementById("restartButton");
+    const startButton = document.getElementById("startButton");
+    const nextButton = document.getElementById("nextButton");
+    const playAgainButton = document.getElementById("playAgainButton");
+    const startOverlay = document.getElementById("startOverlay");
+    const endOverlay = document.getElementById("endOverlay");
+    const endTitle = document.getElementById("endTitle");
+    const endText = document.getElementById("endText");
+    const endScore = document.getElementById("endScore");
+    const endBest = document.getElementById("endBest");
+    const toastEl = document.getElementById("toast");
+    const connectLine = document.getElementById("connectLine");
 
-    const HARD = {
-      burntRate: 0.18,
-      extraDensity: 1.15,
-    };
+    const levelChip = document.getElementById("levelChip");
+    const scoreChip = document.getElementById("scoreChip");
+    const comboChip = document.getElementById("comboChip");
+    const livesChip = document.getElementById("livesChip");
+    const progressFill = document.getElementById("progressFill");
+    const goalChip = document.getElementById("goalChip");
+    const targetPreview = document.getElementById("targetPreview");
+    const ruleTitle = document.getElementById("ruleTitle");
+    const ruleText = document.getElementById("ruleText");
 
-    const topEl = document.getElementById("top");
-    const machineEl = document.getElementById("machine");
-    const rowsArea = document.getElementById("rowsArea");
-    const targetContainer = document.getElementById("targetContainer");
-    const levelDisplay = document.getElementById("levelDisplay");
-    const progressCounter = document.getElementById("progressCounter");
-    const resetButton = document.getElementById("resetButton");
-    const slotWindow = document.getElementById("slotWindow");
-    const toast = document.getElementById("toast");
-    const modeNormalBtn = document.getElementById("modeNormal");
-    const modeHardBtn = document.getElementById("modeHard");
-    const heartsEl = document.getElementById("hearts");
-    const chaosBar = document.getElementById("chaosBar");
-    const chaosFill = document.getElementById("chaosFill");
-    const heatLabel = document.getElementById("heatLabel");
-    const collapseOverlay = document.getElementById("collapseOverlay");
-    const collapseRestart = document.getElementById("collapseRestart");
-    const statLevel = document.getElementById("statLevel");
-    const statHeat = document.getElementById("statHeat");
+    let game = null;
+    let rafId = null;
+    let toastTimer = null;
 
-    let currentLevelIndex = 0;
-    let mode = MODES.NORMAL;
-
-    let targets = [];
-    let activeRowIndex = 0;
-    let levelComplete = false;
-
-    let lives = LIVES_MAX;
-    let chaos = CHAOS.min;
-    let chaosTickId = null;
-    let highlightTimerId = null;
-    let toastTimerId = null;
-
-    let audioCtx = null;
-    let drumTimerId = null;
-
-    function showToast(msg, ms = 1200) {
-      if (toastTimerId) clearTimeout(toastTimerId);
-      toast.textContent = msg;
-      toast.classList.add("show");
-      toastTimerId = setTimeout(() => {
-        toast.classList.remove("show");
-      }, ms);
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
     }
 
-    function clamp(n, a, b) {
-      return Math.max(a, Math.min(b, n));
+    function randomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    function pickRandom(arr) {
+      return arr[randomInt(arr.length)];
     }
 
     function shuffle(arr) {
       const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
+      for (let i = copy.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
         [copy[i], copy[j]] = [copy[j], copy[i]];
       }
       return copy;
     }
 
-    function rowDirection(rowIndex) {
-      return rowIndex % 2 === 0 ? "ltr" : "rtl";
+    function getIngredientByName(name) {
+      return INGREDIENTS.find((item) => item.name === name) || null;
     }
 
-    function getItem(name) {
-      return INGREDIENTS.find((s) => s.name === name) || null;
+    function getPool(level) {
+      return INGREDIENTS.slice(0, level.pool);
     }
 
-    function svgDataUrl(label, emoji, color) {
-      const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-          <defs>
-            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stop-color="#ffffff"/>
-              <stop offset="100%" stop-color="${color}"/>
-            </linearGradient>
-          </defs>
-          <rect x="6" y="6" width="116" height="116" rx="22" fill="url(#g)" stroke="#3b2a1a" stroke-width="4"/>
-          <text x="64" y="60" text-anchor="middle" font-size="42">‎${emoji}</text>
-          <text x="64" y="98" text-anchor="middle" font-size="14" font-family="Arial, sans-serif" font-weight="700" fill="#1f140e">${label}</text>
-        </svg>
-      `;
-      return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    function getViewportHeight() {
+      return leftLaneEl.clientHeight || 500;
     }
 
-    function getImageSrc(item) {
-      return svgDataUrl(item.name, item.emoji, item.color);
+    function getHitCenterY() {
+      return getViewportHeight() / 2;
     }
 
-    function isInWindow(imgEl) {
-      const windowRect = slotWindow.getBoundingClientRect();
-      const imgRect = imgEl.getBoundingClientRect();
-      const imgCenterX = imgRect.left + imgRect.width / 2;
-      const imgCenterY = imgRect.top + imgRect.height / 2;
-
-      return imgCenterX >= windowRect.left &&
-             imgCenterX <= windowRect.right &&
-             imgCenterY >= windowRect.top &&
-             imgCenterY <= windowRect.bottom;
+    function getOffscreenTop() {
+      return -START_Y_OFFSET;
     }
 
-    function updateWindowHighlights() {
-      const selector =
-        mode === MODES.HARD
-          ? `.moving-row[data-row="${activeRowIndex}"] .symbol`
-          : `.symbol`;
-
-      document.querySelectorAll(".symbol.in-window").forEach((img) => {
-        img.classList.remove("in-window");
-      });
-
-      document.querySelectorAll(selector).forEach((img) => {
-        img.classList.toggle("in-window", isInWindow(img));
-      });
+    function getOffscreenBottom() {
+      return getViewportHeight() + END_Y_OFFSET;
     }
 
-    function startHighlightLoop() {
-      stopHighlightLoop();
-      highlightTimerId = setInterval(updateWindowHighlights, 100);
-    }
-
-    function stopHighlightLoop() {
-      if (highlightTimerId) clearInterval(highlightTimerId);
-      highlightTimerId = null;
-    }
-
-    function setAllRowsState(state) {
-      document.querySelectorAll(".moving-row").forEach((r) => {
-        r.style.animationPlayState = state;
-      });
-    }
-
-    function pauseRow(rowIndex) {
-      const row = document.querySelector(`.moving-row[data-row="${rowIndex}"]`);
-      if (row) row.style.animationPlayState = "paused";
-    }
-
-    function flashLane(rowIndex, kind) {
-      const lane = document.querySelector(`.lane[data-row="${rowIndex}"]`);
-      if (!lane) return;
-      lane.classList.remove("good", "bad");
-      lane.classList.add(kind);
-      setTimeout(() => lane.classList.remove(kind), 220);
-    }
-
-    function applyResponsiveSizing(levelRows) {
-      const root = document.documentElement.style;
-      const vh = window.innerHeight || 800;
-      const topH = topEl.getBoundingClientRect().height;
-      const footer = document.querySelector(".footer");
-      const footerH = footer ? footer.getBoundingClientRect().height : 0;
-      const paddingAndGaps = 34;
-      const machineAvailable = Math.max(240, vh - topH - footerH - paddingAndGaps);
-
-      const maxSymbol = Math.min(124, Math.floor(machineAvailable / (levelRows * 1.45)));
-      const minSymbol = Math.max(52, Math.floor(maxSymbol * 0.78));
-      const pad = Math.max(4, Math.floor(maxSymbol * 0.10));
-      const gap = Math.max(4, Math.floor(maxSymbol * 0.10));
-
-      root.setProperty("--symbolMax", `${maxSymbol}px`);
-      root.setProperty("--symbolMin", `${minSymbol}px`);
-      root.setProperty("--lanePadY", `${pad}px`);
-      root.setProperty("--laneGap", `${gap}px`);
-    }
-
-    function renderHearts() {
-      heartsEl.innerHTML = "";
-      for (let i = 0; i < LIVES_MAX; i++) {
-        const s = document.createElement("span");
-        s.textContent = "❤";
-        s.className = "heart" + (i < lives ? "" : " off");
-        heartsEl.appendChild(s);
+    function createItemElement(item) {
+      const el = document.createElement("div");
+      el.className = "item";
+      if (item.color) {
+        el.classList.add(`color-${item.color}`);
       }
+
+      const img = document.createElement("img");
+      img.src = `images/${item.file}`;
+      img.alt = item.name;
+
+      el.appendChild(img);
+      return el;
     }
 
-    function chaosPct() {
-      return (chaos - CHAOS.min) / (CHAOS.max - CHAOS.min);
+    function makeLaneItem({ ingredient, color, y, direction }) {
+      return {
+        id: `${ingredient.name}-${color || "plain"}-${Math.random().toString(36).slice(2)}`,
+        name: ingredient.name,
+        file: ingredient.file,
+        color,
+        y,
+        direction,
+        active: false,
+        el: null,
+        hitLock: false
+      };
     }
 
-    function updateHeatUI() {
-      const pct = clamp(chaosPct(), 0, 1);
-      const p100 = Math.round(pct * 100);
-      chaosFill.style.width = `${p100}%`;
+    function showToast(text, ms = 700) {
+      if (toastTimer) {
+        clearTimeout(toastTimer);
+      }
+      toastEl.textContent = text;
+      toastEl.classList.add("show");
+      toastTimer = setTimeout(() => {
+        toastEl.classList.remove("show");
+      }, ms);
+    }
 
-      const label =
-        p100 < 35 ? "CALM" :
-        p100 < 65 ? "RUSH" :
-        p100 < 90 ? "CHAOS" : "OVERLOAD";
+    function pulseConnection() {
+      connectLine.classList.remove("show");
+      void connectLine.offsetWidth;
+      connectLine.classList.add("show");
+    }
 
-      heatLabel.textContent = label;
-      chaosBar.classList.toggle("pulse", p100 >= 90);
+    function playBeep(kind) {
+      const AudioContextRef = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextRef) return;
+
+      if (!game.audioCtx) {
+        game.audioCtx = new AudioContextRef();
+      }
+
+      const ctx = game.audioCtx;
+      if (ctx.state === "suspended") {
+        ctx.resume().catch(() => {});
+      }
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const now = ctx.currentTime;
+
+      osc.type = kind === "good" ? "sine" : "triangle";
+      osc.frequency.setValueAtTime(kind === "good" ? 620 : 220, now);
+      osc.frequency.exponentialRampToValueAtTime(kind === "good" ? 860 : 140, now + 0.12);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(kind === "good" ? 0.05 : 0.04, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    }
+
+    function vibrate(ms) {
+      if (!("vibrate" in navigator)) return;
+      navigator.vibrate(ms);
+    }
+
+    function updateLivesUI() {
+      const filled = "❤".repeat(game.lives);
+      const empty = "♡".repeat(MAX_LIVES - game.lives);
+      livesChip.textContent = `${filled}${empty}`;
     }
 
     function updateHUD() {
-      const level = LEVELS[currentLevelIndex];
-      const doneCount = targets.filter((t) => t.done).length;
-      levelDisplay.textContent = `LEVEL ${level.level}`;
-      progressCounter.textContent = `${doneCount} / ${targets.length}`;
-      renderHearts();
-      updateHeatUI();
-    }
+      const level = LEVELS[game.levelIndex];
+      levelChip.textContent = `Level ${level.level}`;
+      scoreChip.textContent = `Score ${game.score}`;
+      comboChip.textContent = `Combo x${Math.max(1, game.combo)}`;
+      goalChip.textContent = `${game.matches} / ${level.goal}`;
+      progressFill.style.width = `${(game.matches / level.goal) * 100}%`;
+      ruleTitle.textContent = level.title;
+      ruleText.textContent = level.text;
 
-    function buildTargetsForLevel(level) {
-      const pool = INGREDIENTS.slice(0, level.pool);
-      const names = shuffle(pool.map((s) => s.name));
-      const chosen = [];
-
-      for (let r = 0; r < level.rows; r++) {
-        const name = names[r % names.length];
-        chosen.push({ rowIndex: r, name, done: false });
+      const previewItem = getPool(level)[0];
+      if (previewItem) {
+        targetPreview.src = `images/${previewItem.file}`;
+        targetPreview.alt = previewItem.name;
       }
 
-      return chosen;
+      updateLivesUI();
     }
 
-    function computeTargetCount({ baseLen, speedSeconds }) {
-      const symPerSecond = baseLen / Math.max(1, speedSeconds);
-      const approxGap = clamp(Math.round(2.2 * symPerSecond), 4, 10);
-      const needed = Math.ceil(baseLen / approxGap) + 1;
-      return clamp(needed, 4, 8);
+    function resetLaneDOM() {
+      leftLaneEl.innerHTML = "";
+      rightLaneEl.innerHTML = "";
     }
 
-    function pickTargetPositionsEven({ baseLen, targetCount }) {
-      const positions = [];
-      const step = Math.floor(baseLen / (targetCount + 1));
-
-      for (let i = 1; i <= targetCount; i++) {
-        const jitter = Math.floor(Math.random() * Math.max(1, step * 0.3));
-        const p = (i * step + jitter) % baseLen;
-        positions.push(p);
-      }
-
-      const uniq = Array.from(new Set(positions));
-      while (uniq.length < targetCount) {
-        const p = Math.floor(Math.random() * baseLen);
-        if (!uniq.includes(p)) uniq.push(p);
-      }
-
-      uniq.sort((a, b) => a - b);
-      return uniq;
-    }
-
-    function buildRowSequence({ level, speedSeconds, baseLen, targetName }) {
-      const pool = INGREDIENTS.slice(0, level.pool).map((x) => x.name);
-      const pattern = new Array(baseLen).fill(null);
-
-      const targetCount = computeTargetCount({ baseLen, speedSeconds });
-      const positions = pickTargetPositionsEven({ baseLen, targetCount });
-
-      for (const p of positions) {
-        pattern[p] = { name: targetName, isTarget: true, state: "fresh" };
-      }
-
-      let last = null;
-      let streak = 0;
-
-      for (let i = 0; i < baseLen; i++) {
-        if (pattern[i]) {
-          const nm = pattern[i].name;
-          if (nm === last) streak += 1;
-          else { last = nm; streak = 1; }
-          continue;
-        }
-
-        let pick = null;
-        for (let tries = 0; tries < 60; tries++) {
-          const candidate = pool[Math.floor(Math.random() * pool.length)];
-          if (candidate === targetName) continue;
-          if (candidate === last && streak >= 2) continue;
-          pick = candidate;
-          break;
-        }
-
-        if (!pick) {
-          pick = pool[0] === targetName ? pool[1] : pool[0];
-        }
-
-        const burnt = mode === MODES.HARD && Math.random() < HARD.burntRate;
-
-        pattern[i] = {
-          name: pick,
-          isTarget: false,
-          state: burnt ? "burnt" : "fresh"
-        };
-
-        if (pick === last) streak += 1;
-        else { last = pick; streak = 1; }
-      }
-
-      return [...pattern, ...pattern, ...pattern];
-    }
-
-    function renderTargets() {
-      targetContainer.innerHTML = "";
-
-      for (const t of targets) {
-        const item = getItem(t.name);
-        if (!item) continue;
-
-        const tag = document.createElement("div");
-        tag.className = "target-tag";
-
-        const highlight =
-          !t.done &&
-          !levelComplete &&
-          (mode === MODES.NORMAL || t.rowIndex === activeRowIndex);
-
-        if (highlight) tag.classList.add("active");
-        if (t.done) tag.classList.add("done");
-
-        const img = document.createElement("img");
-        img.alt = item.name;
-        img.src = getImageSrc(item);
-
-        const meta = document.createElement("div");
-        meta.className = "target-meta";
-
-        const name = document.createElement("div");
-        name.className = "name";
-        name.textContent = item.name;
-
-        const meaning = document.createElement("div");
-        meaning.className = "meaning";
-        meaning.textContent = item.meaning;
-
-        const rowPill = document.createElement("span");
-        rowPill.className = "pill";
-        rowPill.textContent = `Row ${t.rowIndex + 1}`;
-
-        meta.appendChild(name);
-        meta.appendChild(meaning);
-
-        tag.appendChild(img);
-        tag.appendChild(meta);
-        tag.appendChild(rowPill);
-
-        targetContainer.appendChild(tag);
-      }
-
-      updateHUD();
-    }
-
-    function celebrateSuccess(img) {
-      document.body.classList.add("success-flash");
-      setTimeout(() => document.body.classList.remove("success-flash"), 260);
-
-      img.style.transform = "scale(1.2)";
-      setTimeout(() => {
-        img.style.transform = "";
-      }, 150);
-    }
-
-    function loseLife(reason = "") {
-      lives = Math.max(0, lives - 1);
-      updateHUD();
-
-      if (lives <= 0) {
-        onDeath();
-        return;
-      }
-
-      chaos = clamp(chaos - CHAOS.mercyOnMistake, CHAOS.min, CHAOS.max);
-      updateHeatUI();
-
-      if (reason) showToast(reason, 800);
-    }
-
-    function bumpChaosOnHit() {
-      chaos = clamp(chaos + CHAOS.perHit, CHAOS.min, CHAOS.max);
-    }
-
-    function startChaosTick() {
-      stopChaosTick();
-      chaosTickId = setInterval(() => {
-        if (levelComplete) return;
-        chaos = clamp(chaos + CHAOS.perSecond, CHAOS.min, CHAOS.max);
-        updateHeatUI();
-        retimeRows();
-        retimeDrums();
-      }, 1000);
-    }
-
-    function stopChaosTick() {
-      if (chaosTickId) clearInterval(chaosTickId);
-      chaosTickId = null;
-    }
-
-    function speedMultiplier() {
-      return chaos;
-    }
-
-    function retimeRows() {
-      const level = LEVELS[currentLevelIndex];
-      document.querySelectorAll(".moving-row").forEach((rowEl) => {
-        const r = Number(rowEl.dataset.row || "0");
-        const base = Math.max(6, level.baseSpeedSeconds - (r % 2));
-        const dur = base / speedMultiplier();
-        rowEl.style.setProperty("--speed", `${dur.toFixed(2)}s`);
-      });
-    }
-
-    async function ensureAudio() {
-      if (!window.AudioContext && !window.webkitAudioContext) return;
-
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      if (audioCtx.state === "suspended") {
-        try {
-          await audioCtx.resume();
-        } catch (err) {
-          return;
-        }
-      }
-
-      if (!drumTimerId) {
-        startDrums();
+    function clearItemEffects(items) {
+      for (const item of items) {
+        item.el.classList.remove("good", "bad");
       }
     }
 
-    function playKick(time, gainValue) {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(140, time);
-      osc.frequency.exponentialRampToValueAtTime(55, time + 0.08);
-
-      gain.gain.setValueAtTime(0.0001, time);
-      gain.gain.exponentialRampToValueAtTime(gainValue, time + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.18);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(time);
-      osc.stop(time + 0.2);
-    }
-
-    function playClick(time, gainValue) {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(520, time);
-      osc.frequency.exponentialRampToValueAtTime(260, time + 0.05);
-
-      gain.gain.setValueAtTime(0.0001, time);
-      gain.gain.exponentialRampToValueAtTime(gainValue, time + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.10);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(time);
-      osc.stop(time + 0.12);
-    }
-
-    function drumsBpm() {
-      const pct = clamp(chaosPct(), 0, 1);
-      return 72 + (132 - 72) * pct;
-    }
-
-    function startDrums() {
-      stopDrums();
-
-      const schedule = () => {
-        if (!audioCtx || audioCtx.state !== "running") return;
-
-        const bpm = drumsBpm();
-        const intervalMs = 60000 / bpm;
-
-        const t = audioCtx.currentTime;
-        const pct = clamp(chaosPct(), 0, 1);
-
-        playKick(t, 0.06 + 0.05 * pct);
-        if (pct >= 0.55) playClick(t + 0.02, 0.03 + 0.03 * pct);
-
-        drumTimerId = setTimeout(schedule, intervalMs);
+    function buildGameState(levelIndex = 0) {
+      return {
+        levelIndex,
+        score: 0,
+        combo: 0,
+        bestCombo: 0,
+        matches: 0,
+        lives: MAX_LIVES,
+        running: false,
+        ended: false,
+        audioCtx: null,
+        lastTime: 0,
+        spawnTimerLeft: 0,
+        spawnTimerRight: 0,
+        leftItems: [],
+        rightItems: []
       };
-
-      schedule();
     }
 
-    function stopDrums() {
-      if (drumTimerId) clearTimeout(drumTimerId);
-      drumTimerId = null;
-    }
+    function setupLevel(levelIndex, keepScore = true) {
+      const prevScore = keepScore && game ? game.score : 0;
+      const prevBestCombo = keepScore && game ? game.bestCombo : 0;
+      const prevLives = keepScore && game ? game.lives : MAX_LIVES;
 
-    function retimeDrums() {
-      if (!audioCtx || audioCtx.state !== "running") return;
-      startDrums();
-    }
+      resetLaneDOM();
 
-    function sfxSuccess() {
-      if (!audioCtx || audioCtx.state !== "running") return;
+      game.levelIndex = levelIndex;
+      game.matches = 0;
+      game.combo = 0;
+      game.score = prevScore;
+      game.bestCombo = prevBestCombo;
+      game.lives = prevLives;
+      game.ended = false;
+      game.running = true;
+      game.lastTime = 0;
+      game.spawnTimerLeft = 0;
+      game.spawnTimerRight = 0;
+      game.leftItems = [];
+      game.rightItems = [];
 
-      const t = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(523.25, t);
-      osc.frequency.setValueAtTime(659.25, t + 0.05);
-      osc.frequency.setValueAtTime(783.99, t + 0.10);
-
-      gain.gain.setValueAtTime(0.0001, t);
-      gain.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.24);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start(t);
-      osc.stop(t + 0.25);
-    }
-
-    async function handleSymbolClick(img) {
-      if (levelComplete) return;
-
-      await ensureAudio();
-
-      const rowIndex = Number(img.dataset.row);
-      const name = img.dataset.name;
-      const state = img.dataset.state || "fresh";
-
-      if (!isInWindow(img)) return;
-
-      if (mode === MODES.HARD && rowIndex !== activeRowIndex) {
-        return;
-      }
-
-      if (state === "burnt") {
-        flashLane(rowIndex, "bad");
-        loseLife("Burnt ingredient");
-        return;
-      }
-
-      const target = targets.find((t) => t.rowIndex === rowIndex);
-      if (!target || target.done) return;
-
-      const match = name === target.name;
-      if (!match) {
-        flashLane(rowIndex, "bad");
-        loseLife("Wrong ingredient");
-        return;
-      }
-
-      bumpChaosOnHit();
-      updateHeatUI();
-      retimeRows();
-      retimeDrums();
-
-      sfxSuccess();
-      celebrateSuccess(img);
-      flashLane(rowIndex, "good");
-
-      target.done = true;
-      pauseRow(rowIndex);
-
-      if (mode === MODES.HARD) {
-        const next = targets.find((t) => !t.done);
-        activeRowIndex = next ? next.rowIndex : 0;
-      }
-
-      renderTargets();
-
-      if (targets.every((t) => t.done)) {
-        onLevelWin();
-      }
-    }
-
-    rowsArea.addEventListener("click", (e) => {
-      const img = e.target.closest("img.symbol");
-      if (!img) return;
-      handleSymbolClick(img);
-    }, true);
-
-    function buildLevel(levelIndex) {
-      const level = LEVELS[levelIndex];
-      if (!level) return;
-
-      levelComplete = false;
-      rowsArea.innerHTML = "";
-
-      targets = buildTargetsForLevel(level);
-      activeRowIndex = 0;
-
-      for (let r = 0; r < level.rows; r++) {
-        const lane = document.createElement("div");
-        lane.className = "lane";
-        lane.dataset.row = String(r);
-
-        const movingRow = document.createElement("div");
-        movingRow.className = `moving-row ${rowDirection(r)}`;
-        movingRow.dataset.row = String(r);
-
-        const lenBase = level.baseLen * (mode === MODES.HARD ? HARD.extraDensity : 1.0);
-        const baseLen = Math.round(lenBase);
-
-        const base = Math.max(6, level.baseSpeedSeconds - (r % 2));
-        const dur = base / speedMultiplier();
-        movingRow.style.setProperty("--speed", `${dur.toFixed(2)}s`);
-
-        const rowTarget = targets.find((t) => t.rowIndex === r);
-        if (!rowTarget) continue;
-
-        const seq = buildRowSequence({
-          level,
-          speedSeconds: dur,
-          baseLen,
-          targetName: rowTarget.name,
-        });
-
-        for (const it of seq) {
-          const s = getItem(it.name);
-          if (!s) continue;
-
-          const el = document.createElement("img");
-          el.src = getImageSrc(s);
-          el.alt = it.name;
-          el.className = "symbol" + (it.state === "burnt" ? " burnt" : "");
-          el.dataset.row = String(r);
-          el.dataset.name = it.name;
-          el.dataset.state = it.state;
-          el.setAttribute("aria-label", `${it.name}${it.state === "burnt" ? " burnt" : ""}`);
-
-          movingRow.appendChild(el);
-        }
-
-        lane.appendChild(movingRow);
-        rowsArea.appendChild(lane);
-      }
-
-      renderTargets();
-
-      requestAnimationFrame(() => {
-        applyResponsiveSizing(level.rows);
-        updateWindowHighlights();
-      });
-
-      setAllRowsState("running");
-      startChaosTick();
-      startHighlightLoop();
-    }
-
-    function onLevelWin() {
-      levelComplete = true;
-      stopChaosTick();
-      setAllRowsState("paused");
-
-      lives = Math.min(LIVES_MAX, lives + 1);
       updateHUD();
-
-      const levelNum = LEVELS[currentLevelIndex].level;
-      showToast(`Level ${levelNum} served`, 1100);
-
-      setTimeout(() => {
-        currentLevelIndex = currentLevelIndex >= LEVELS.length - 1 ? 0 : currentLevelIndex + 1;
-        machineEl.style.opacity = "0";
-
-        setTimeout(() => {
-          buildLevel(currentLevelIndex);
-          machineEl.style.opacity = "1";
-        }, 180);
-      }, 820);
+      hideEndOverlay();
     }
 
-    function onDeath() {
-      levelComplete = true;
-      stopChaosTick();
-      setAllRowsState("paused");
-
-      machineEl.classList.add("collapse");
-      collapseOverlay.classList.add("show");
-      collapseOverlay.setAttribute("aria-hidden", "false");
-
-      if (audioCtx) {
-        stopDrums();
-      }
-
-      const levelNum = LEVELS[currentLevelIndex].level;
-      const heat = Math.round(clamp(chaosPct(), 0, 1) * 100);
-      statLevel.textContent = `Level: ${levelNum}`;
-      statHeat.textContent = `Heat: ${heat}%`;
+    function startNewRun() {
+      game = buildGameState(0);
+      setupLevel(0, false);
+      hideStartOverlay();
+      startLoop();
     }
 
     function restartRun() {
-      stopChaosTick();
-      setAllRowsState("paused");
-      machineEl.classList.remove("collapse");
-      collapseOverlay.classList.remove("show");
-      collapseOverlay.setAttribute("aria-hidden", "true");
+      cancelLoop();
+      game = buildGameState(0);
+      setupLevel(0, false);
+      hideStartOverlay();
+      startLoop();
+    }
 
-      lives = LIVES_MAX;
-      chaos = CHAOS.min;
-      currentLevelIndex = 0;
-      levelComplete = false;
+    function nextLevel() {
+      const nextIndex = clamp(game.levelIndex + 1, 0, LEVELS.length - 1);
+      setupLevel(nextIndex, true);
+      startLoop();
+    }
+
+    function startLoop() {
+      cancelLoop();
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function cancelLoop() {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function hideStartOverlay() {
+      startOverlay.classList.remove("show");
+    }
+
+    function showStartOverlay() {
+      startOverlay.classList.add("show");
+    }
+
+    function hideEndOverlay() {
+      endOverlay.classList.remove("show");
+    }
+
+    function showEndOverlay(title, text) {
+      endTitle.textContent = title;
+      endText.textContent = text;
+      endScore.textContent = `Score ${game.score}`;
+      endBest.textContent = `Best Combo ${game.bestCombo}`;
+      endOverlay.classList.add("show");
+    }
+
+    function createRandomIngredient(level) {
+      const ingredient = pickRandom(getPool(level));
+      const color = level.colorMode ? pickRandom(COLORS) : null;
+      return { ingredient, color };
+    }
+
+    function maybeSpawnPair(level) {
+      const shouldCreateMatch = Math.random() < 0.42;
+      const leftData = createRandomIngredient(level);
+      let rightData = createRandomIngredient(level);
+
+      if (shouldCreateMatch) {
+        rightData = {
+          ingredient: leftData.ingredient,
+          color: level.colorMode ? leftData.color : null
+        };
+      }
+
+      const leftItem = makeLaneItem({
+        ingredient: leftData.ingredient,
+        color: leftData.color,
+        y: getOffscreenBottom(),
+        direction: "up"
+      });
+
+      const rightItem = makeLaneItem({
+        ingredient: rightData.ingredient,
+        color: rightData.color,
+        y: getOffscreenTop(),
+        direction: "down"
+      });
+
+      leftItem.el = createItemElement(leftItem);
+      rightItem.el = createItemElement(rightItem);
+
+      leftLaneEl.appendChild(leftItem.el);
+      rightLaneEl.appendChild(rightItem.el);
+
+      game.leftItems.push(leftItem);
+      game.rightItems.push(rightItem);
+    }
+
+    function updateLaneItems(items, deltaPx) {
+      const hitCenter = getHitCenterY();
+      const level = LEVELS[game.levelIndex];
+      const hitRange = level.hitWindow;
+
+      for (const item of items) {
+        item.y += item.direction === "up" ? -deltaPx : deltaPx;
+        item.el.style.top = `${item.y}px`;
+
+        const inWindow = Math.abs(item.y - hitCenter) <= hitRange;
+        item.active = inWindow;
+        item.el.classList.toggle("active", inWindow);
+      }
+    }
+
+    function removeExpiredItems() {
+      const topLimit = getOffscreenTop() - ITEM_SIZE;
+      const bottomLimit = getOffscreenBottom() + ITEM_SIZE;
+
+      game.leftItems = game.leftItems.filter((item) => {
+        const keep = item.y > topLimit;
+        if (!keep) {
+          item.el.remove();
+        }
+        return keep;
+      });
+
+      game.rightItems = game.rightItems.filter((item) => {
+        const keep = item.y < bottomLimit;
+        if (!keep) {
+          item.el.remove();
+        }
+        return keep;
+      });
+    }
+
+    function getClosestActiveItem(items) {
+      const hitCenter = getHitCenterY();
+      const active = items.filter((item) => item.active);
+      if (!active.length) return null;
+
+      const sorted = active.sort((a, b) => {
+        return Math.abs(a.y - hitCenter) - Math.abs(b.y - hitCenter);
+      });
+
+      return sorted[0];
+    }
+
+    function isMatch(leftItem, rightItem) {
+      if (!leftItem || !rightItem) return false;
+      if (leftItem.name !== rightItem.name) return false;
+
+      const level = LEVELS[game.levelIndex];
+      if (level.colorMode && leftItem.color !== rightItem.color) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function markItemResult(item, kind) {
+      if (!item) return;
+      item.el.classList.remove("good", "bad");
+      item.el.classList.add(kind);
+      setTimeout(() => {
+        if (item.el) {
+          item.el.classList.remove(kind);
+        }
+      }, 180);
+    }
+
+    function awardMatch(leftItem, rightItem) {
+      game.matches += 1;
+      game.combo += 1;
+      game.bestCombo = Math.max(game.bestCombo, game.combo);
+
+      const accuracyBonus = Math.max(
+        0,
+        20 - Math.round(
+          Math.abs(leftItem.y - getHitCenterY()) + Math.abs(rightItem.y - getHitCenterY())
+        )
+      );
+
+      game.score += 100 + (game.combo - 1) * 10 + accuracyBonus;
+
+      markItemResult(leftItem, "good");
+      markItemResult(rightItem, "good");
+      pulseConnection();
+      playBeep("good");
+      vibrate(20);
+      showToast(game.combo >= 5 ? `Combo x${game.combo}` : "Match");
+
+      leftItem.hitLock = true;
+      rightItem.hitLock = true;
 
       updateHUD();
 
-      if (audioCtx && audioCtx.state === "running") {
-        startDrums();
+      const level = LEVELS[game.levelIndex];
+      if (game.matches >= level.goal) {
+        onLevelClear();
       }
-
-      buildLevel(currentLevelIndex);
     }
 
-    function setMode(newMode, options = {}) {
-      const { silent = false } = options;
+    function penalizeMiss(message) {
+      game.combo = 0;
+      game.lives = Math.max(0, game.lives - 1);
+      playBeep("bad");
+      vibrate(60);
+      showToast(message);
+      updateHUD();
 
-      mode = newMode;
-      modeNormalBtn.classList.toggle("active", mode === MODES.NORMAL);
-      modeHardBtn.classList.toggle("active", mode === MODES.HARD);
+      if (game.lives <= 0) {
+        onGameOver();
+      }
+    }
 
-      const next = targets.find((t) => !t.done);
-      activeRowIndex = next ? next.rowIndex : 0;
+    function attemptMatch() {
+      if (!game || !game.running || game.ended) return;
 
-      if (!silent) {
-        showToast(
-          mode === MODES.NORMAL
-            ? "Normal mode: any order"
-            : "Hard mode: row by row with distractions",
-          900
+      const leftItem = getClosestActiveItem(game.leftItems);
+      const rightItem = getClosestActiveItem(game.rightItems);
+
+      clearItemEffects(game.leftItems);
+      clearItemEffects(game.rightItems);
+
+      if (!leftItem || !rightItem) {
+        penalizeMiss("No pair in window");
+        return;
+      }
+
+      if (leftItem.hitLock || rightItem.hitLock) {
+        penalizeMiss("Already used");
+        return;
+      }
+
+      if (!isMatch(leftItem, rightItem)) {
+        markItemResult(leftItem, "bad");
+        markItemResult(rightItem, "bad");
+        penalizeMiss("Wrong pair");
+        return;
+      }
+
+      awardMatch(leftItem, rightItem);
+    }
+
+    function onLevelClear() {
+      game.running = false;
+      game.ended = true;
+      cancelLoop();
+
+      const isLast = game.levelIndex >= LEVELS.length - 1;
+      if (isLast) {
+        showEndOverlay(
+          "Kitchen Master",
+          "You cleared all six stages. Restart to chase a higher score."
         );
+        nextButton.disabled = true;
+        nextButton.style.opacity = "0.45";
+        nextButton.style.pointerEvents = "none";
+        return;
       }
 
-      buildLevel(currentLevelIndex);
+      nextButton.disabled = false;
+      nextButton.style.opacity = "1";
+      nextButton.style.pointerEvents = "auto";
+
+      showEndOverlay(
+        `Level ${LEVELS[game.levelIndex].level} Clear`,
+        "Nice. The next stage adds more speed or more visual pressure."
+      );
     }
 
-    resetButton.addEventListener("click", restartRun);
-    collapseRestart.addEventListener("click", restartRun);
+    function onGameOver() {
+      game.running = false;
+      game.ended = true;
+      cancelLoop();
 
-    modeNormalBtn.addEventListener("click", () => {
-      if (mode !== MODES.NORMAL) setMode(MODES.NORMAL);
-    });
+      nextButton.disabled = true;
+      nextButton.style.opacity = "0.45";
+      nextButton.style.pointerEvents = "none";
 
-    modeHardBtn.addEventListener("click", () => {
-      if (mode !== MODES.HARD) setMode(MODES.HARD);
+      showEndOverlay(
+        "Kitchen Overheated",
+        "You ran out of lives. Restart and try to keep the combo alive."
+      );
+    }
+
+    function tick(timestamp) {
+      if (!game || !game.running) return;
+
+      if (!game.lastTime) {
+        game.lastTime = timestamp;
+      }
+
+      const deltaMs = Math.min(32, timestamp - game.lastTime);
+      game.lastTime = timestamp;
+
+      const level = LEVELS[game.levelIndex];
+      game.spawnTimerLeft += deltaMs;
+      game.spawnTimerRight += deltaMs;
+
+      const leftDelta = (level.speedLeft * deltaMs) / 1000;
+      const rightDelta = (level.speedRight * deltaMs) / 1000;
+
+      if (game.spawnTimerLeft >= level.spawnMs || game.spawnTimerRight >= level.spawnMs) {
+        game.spawnTimerLeft = 0;
+        game.spawnTimerRight = 0;
+        maybeSpawnPair(level);
+      }
+
+      updateLaneItems(game.leftItems, leftDelta);
+      updateLaneItems(game.rightItems, rightDelta);
+      removeExpiredItems();
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    matchButton.addEventListener("click", attemptMatch);
+    restartButton.addEventListener("click", restartRun);
+    startButton.addEventListener("click", startNewRun);
+    playAgainButton.addEventListener("click", restartRun);
+    nextButton.addEventListener("click", nextLevel);
+
+    window.addEventListener("keydown", (event) => {
+      if (event.code === "Space") {
+        event.preventDefault();
+        attemptMatch();
+      }
     });
 
     window.addEventListener("resize", () => {
-      applyResponsiveSizing(LEVELS[currentLevelIndex].rows);
-      updateWindowHighlights();
+      if (!game) return;
+      for (const item of [...game.leftItems, ...game.rightItems]) {
+        item.el.style.top = `${item.y}px`;
+      }
     });
 
-    window.addEventListener("load", () => {
-      updateHUD();
-      setMode(MODES.NORMAL, { silent: true });
-    });
+    game = buildGameState(0);
+    updateHUD();
+    showStartOverlay();
   </script>
 </body>
 </html>
