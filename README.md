@@ -1,28 +1,83 @@
-# Kitchen Fire 🔥🥘
+# Kitchen Pair Rush
 
-**Play:** https://chicafricanculture.github.io/kitchen-fire/
+A mobile-first browser game where players match ingredient pairs moving in opposite directions.
 
-Kitchen Fire is a fast arcade game about cooking under rising heat — using African ingredients as the core visual language.  
-Tap the correct ingredient **only when it’s inside the GOLD window** before the kitchen overheats.
+The left lane moves **up**.  
+The right lane moves **down**.  
+Tap when the **same ingredient pair** appears inside the center window at the same time.
 
-## How to Play
-- Watch ingredients move through the **gold window**
-- Tap the matching ingredient to “cook” it
-- Clear all rows to advance
-- **Heat** rises over time (and with every correct hit)
-- You have **3 hearts** — mistakes cost a heart
-- **Hard Mode:** row-by-row order + more distractions
+## Overview
 
-## Why this exists
-I’m building games that normalize African food and ingredients through repetition, motion, and play — without exoticizing them.
+Kitchen Pair Rush is a fast arcade-style matching game designed for touch screens first, while still working well on desktop.
 
-## Built with
-- HTML / CSS / JavaScript (no framework)
-- SVG ingredient icons
+The game is built around one simple action:
 
-## Links
-- **African Gourmet Archives (home):** https://www.theafricangourmet.com/p/home.html
-- **More games:** https://github.com/ChicAfricanCulture
+- watch two moving lanes
+- wait for the matching pair
+- tap at the right moment
 
-## License
-MIT
+This redesign replaces the previous conveyor-style interaction with a cleaner mechanic that is easier to understand, faster to play, and better suited for mobile devices.
+
+## Core Gameplay
+
+- The **left lane** scrolls upward
+- The **right lane** scrolls downward
+- The player taps the **center match button**
+- A correct tap happens when both visible items are the **same pair**
+- Later levels require matching both **ingredient and color**
+
+## Controls
+
+### Mobile
+- Tap the **center match button**
+
+### Desktop
+- Click the **center match button**
+- Or press **Space**
+
+## Level Progression
+
+### Level 1 — Shape Match
+Match the same ingredient in both lanes.
+
+### Level 2 — Faster
+Same rule, faster movement.
+
+### Level 3 — Color Match
+Ingredient and color must both match.
+
+### Level 4 — Tight Timing
+The timing window gets smaller.
+
+### Level 5 — More Decoys
+More ingredient types increase difficulty.
+
+### Level 6 — Lane Desync
+The two lanes no longer move at the same speed.
+
+## Features
+
+- mobile-first layout
+- one-tap gameplay
+- desktop keyboard support
+- score and combo tracking
+- lives system
+- progressive difficulty
+- reusable SVG ingredient assets
+
+## File Structure
+
+```text
+.
+├── index.html
+├── README.md
+├── LICENSE
+└── images
+    ├── egusi.svg
+    ├── fish.svg
+    ├── onion.svg
+    ├── palm-oil.svg
+    ├── pepper.svg
+    ├── plantain.svg
+    ├── tomato.svg
+    └── yam.svg
