@@ -1,83 +1,25 @@
 # Kitchen Pair Rush
 
-A mobile-first browser game where players match ingredient pairs moving in opposite directions.
+A fast, one-tap matching game made for phones. Two lanes of ingredients slide past each other: pepper, plantain, fish, yam, onion, tomato, egusi and palm oil. Tap when the same ingredient sits in the middle window on both sides.
 
-The left lane moves **up**.  
-The right lane moves **down**.  
-Tap when the **same ingredient pair** appears inside the center window at the same time.
+**▶ Play it here: [https://chicafricanculture.github.io/kitchen-fire/](https://chicafricanculture.github.io/kitchen-fire/)**
 
-## Overview
+A free game from [The African Gourmet](https://www.theafricangourmet.com/), made to help people learn about African food through play.
 
-Kitchen Pair Rush is a fast arcade-style matching game designed for touch screens first, while still working well on desktop.
+## How to play
 
-The game is built around one simple action:
+- The left lane moves up and the right lane moves down.
+- When both lanes show the same ingredient inside the centre window, tap **Tap to Match**. On a computer you can click it or press Space.
+- Good taps build your score and combo. Misses cost a life.
+- There are six levels: shape match, faster, colour match, tight timing, more decoys and lane desync.
 
-- watch two moving lanes
-- wait for the matching pair
-- tap at the right moment
+## More from The African Gourmet
 
-This redesign replaces the previous conveyor-style interaction with a cleaner mechanic that is easier to understand, faster to play, and better suited for mobile devices.
+- [More African food stories at The African Gourmet](https://www.theafricangourmet.com/)
+- [More games to play and learn](https://www.theafricangourmet.com/p/play-learn-african-food-games.html)
 
-## Core Gameplay
+---
 
-- The **left lane** scrolls upward
-- The **right lane** scrolls downward
-- The player taps the **center match button**
-- A correct tap happens when both visible items are the **same pair**
-- Later levels require matching both **ingredient and color**
+Maintained by [The African Gourmet](https://www.theafricangourmet.com/).
 
-## Controls
-
-### Mobile
-- Tap the **center match button**
-
-### Desktop
-- Click the **center match button**
-- Or press **Space**
-
-## Level Progression
-
-### Level 1 — Shape Match
-Match the same ingredient in both lanes.
-
-### Level 2 — Faster
-Same rule, faster movement.
-
-### Level 3 — Color Match
-Ingredient and color must both match.
-
-### Level 4 — Tight Timing
-The timing window gets smaller.
-
-### Level 5 — More Decoys
-More ingredient types increase difficulty.
-
-### Level 6 — Lane Desync
-The two lanes no longer move at the same speed.
-
-## Features
-
-- mobile-first layout
-- one-tap gameplay
-- desktop keyboard support
-- score and combo tracking
-- lives system
-- progressive difficulty
-- reusable SVG ingredient assets
-
-## File Structure
-
-```text
-.
-├── index.html
-├── README.md
-├── LICENSE
-└── images
-    ├── egusi.svg
-    ├── fish.svg
-    ├── onion.svg
-    ├── palm-oil.svg
-    ├── pepper.svg
-    ├── plantain.svg
-    ├── tomato.svg
-    └── yam.svg
+MIT License, see [LICENSE](LICENSE).
